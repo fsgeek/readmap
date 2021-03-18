@@ -35,14 +35,16 @@ add_project_arguments('-D_REENTRANT', '-DHAVE_CONFIG_H', '-D_GNU_SOURCE', '-D_XO
                       '-Wstrict-prototypes', '-Wmissing-declarations', '-Wwrite-strings',
                       '-fno-strict-aliasing', language: 'c')
 
-include_dirs = include_directories('include')
+include_dirs = include_directories('include', '.')
 thread_dep = dependency('threads')
 uuid_dep = c_compiler.find_library('uuid')
 dl_dep = c_compiler.find_library('dl', required: false)
 rt_dep = c_compiler.find_library('rt')
 pthread_dep = c_compiler.find_library('pthread')
 
-subdirs = ['api', 'preload']
+munit_dep = dependency('munit', fallback: ['munit', 'munit_dep'])
+
+subdirs = ['api', 'preload', 'tests']
 
 foreach n : subdirs
     subdir(n)

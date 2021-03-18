@@ -8,11 +8,6 @@
 #include <pthread.h>
 #include <string.h>
 
-static void readmap_dummy_init(void);
-static void readmap_real_init(void);
-static void readmap_dummy_shutdown(void);
-static void readmap_real_shutdown(void);
-
 pthread_once_t readmap_initialized = PTHREAD_ONCE_INIT;
 
 static void readmap_init_internal(void)

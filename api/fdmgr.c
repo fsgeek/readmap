@@ -263,6 +263,8 @@ readmap_file_state_t *readmap_create_file_state(int fd, const char *pathname, in
     int status;
     struct stat st;
 
+    (void)pathname;
+
     assert(fd_lookup_table);
 
     status = fstat(fd, &st);
@@ -277,7 +279,7 @@ readmap_file_state_t *readmap_create_file_state(int fd, const char *pathname, in
         file_state->fd = fd;
         file_state->check_size = 0;
         file_state->mapped = 0;
-        file_state->flags = 0;
+        file_state->flags = flags;
         file_state->mode = st.st_mode;
         file_state->map_location = 0;
         pthread_rwlock_init(&file_state->lock, NULL);
@@ -352,7 +354,6 @@ static void readmap_update_size(readmap_file_state_t *file_state)
 
     file_state->check_size = 0;
     file_state->cached_size = st.st_size;
-    file_state->check_time;
     status = clock_gettime(CLOCK_REALTIME, &file_state->check_time);
     assert(0 == status);
 }
